@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 void main() {
@@ -37,6 +38,20 @@ class MyHomePage extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomPaint(
+                      size: Size(20, 20),
+                      painter: EyebrowPainter(),
+                    ),
+                    SizedBox(width: 30),
+                    CustomPaint(
+                      size: Size(20, 20),
+                      painter: EyebrowPainter(),
+                    ),
+                  ],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -126,17 +141,9 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                ClipOval(
-                  child: Container(
-                    width: 100,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(color: Colors.black, spreadRadius: 1, blurRadius: 1, offset: Offset(0,10)),
-                      ],
-                    ),
-                  ),
+                CustomPaint(
+                  size: Size(80, 20),
+                  painter: MousePainter(),
                 ),
               ],
             ),
@@ -144,5 +151,45 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class MousePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Rect.fromLTRB(0, 0, size.width, size.height);
+    final startAngle = math.pi / 12 * 0;
+    final sweepAngle = math.pi / 12 * 12;
+    final useCenter = false;
+    final paint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = size.width * 0.03;
+    canvas.drawArc(rect, startAngle, sweepAngle, useCenter, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter old) {
+    return false;
+  }
+}
+
+class EyebrowPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Rect.fromLTRB(0, 0, size.width, size.height);
+    final startAngle = math.pi / 12 * 12;
+    final sweepAngle = math.pi / 12 * 12;
+    final useCenter = false;
+    final paint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = size.width * 0.1;
+    canvas.drawArc(rect, startAngle, sweepAngle, useCenter, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter old) {
+    return false;
   }
 }
